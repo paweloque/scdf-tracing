@@ -1,0 +1,29 @@
+# IntelliJ IDEA files
+.idea/
+
+# Maven build artifacts
+target/
+
+# Automatically installed dependencies
+*.iml
+*.iws
+*.ipr
+*.jar
+*.war
+*.ear
+*.class
+*.log
+*.tmp
+.idea_modules/
+logs/
+out/
+build/
+bin/
+
+# macOS DS_Store files
+.DS_Store
+
+
+spring-cloud-dataflow-samples
+apps/usage-cost-stream-sample-traced
+**/*.zip
