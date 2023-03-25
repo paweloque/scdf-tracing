@@ -2,32 +2,40 @@
 
 ## Install Spring Cloud Dataflow
 
-wget -O docker-compose.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose.yml;
-wget -O docker-compose-rabbitmq.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose-rabbitmq.yml;
-wget -O docker-compose-kafka.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose-kafka.yml;
-wget -O docker-compose-postgres.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose-postgres.yml;
-wget -O docker-compose-prometheus.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose-prometheus.yml
-wget -O docker-compose-zipkin.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose-zipkin.yml
+Get all necessary docker-compose files:
+
+    wget -O docker-compose.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose.yml;
+    wget -O docker-compose-rabbitmq.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose-rabbitmq.yml;
+    wget -O docker-compose-kafka.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose-kafka.yml;
+    wget -O docker-compose-postgres.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose-postgres.yml;
+    wget -O docker-compose-prometheus.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose-prometheus.yml
+    wget -O docker-compose-zipkin.yml https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/main/src/docker-compose/docker-compose-zipkin.yml
 
 
 ### Start Spring Cloud Dataflow
 
+Setup without tracing
+
+```
 export DATAFLOW_VERSION=2.10.2
 export SKIPPER_VERSION=2.9.2
 docker-compose -f docker-compose.yml -f docker-compose-rabbitmq.yml -f docker-compose-postgres.yml up
-
+```
 
 ### Start with kafka & zipkin
 
+Use zipkin as distributed tracing server.
+
+```
 export DATAFLOW_VERSION=2.10.2
 export SKIPPER_VERSION=2.9.2
 docker-compose -f docker-compose.yml -f docker-compose-kafka.yml -f docker-compose-postgres.yml -f docker-compose-zipkin.yml up
-
+```
 
 
 ## Getting and building a sample application
 
-wget 'https://github.com/spring-cloud/spring-cloud-dataflow-samples/blob/main/dataflow-website/stream-developer-guides/streams/standalone-stream-sample/dist/usage-cost-stream-sample.zip?raw=true' -O usage-cost-stream-sample.zip
+    wget 'https://github.com/spring-cloud/spring-cloud-dataflow-samples/blob/main/dataflow-website/stream-developer-guides/streams/standalone-stream-sample/dist/usage-cost-stream-sample.zip?raw=true' -O usage-cost-stream-sample.zip
 
 
 ## Playing with the woodchuck application
@@ -36,6 +44,7 @@ wget 'https://github.com/spring-cloud/spring-cloud-dataflow-samples/blob/main/da
     curl http://localhost:20015 -H "Content-Type:text/plain"   -X POST -d "how much wood would a woodchuck chuck if a woodchuck could chuck wood"
 
 
+## Spring starter application (included here)
 
 Registering an application:
 
@@ -54,7 +63,7 @@ Registering an application:
 
     Stream definition:
         usage-detail-sender | usage-cost-processor | usage-cost-logger
-
+    
     Stream definition with a polling delay of 2000ms:
         usage-detail-sender --spring.cloud.stream.poller.fixed-delay=2000 | usage-cost-processor | usage-cost-logger
 
