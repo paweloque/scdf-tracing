@@ -33,6 +33,11 @@ docker-compose -f docker-compose.yml -f docker-compose-kafka.yml -f docker-compo
 ```
 
 
+## Programming examples
+
+    https://dataflow.spring.io/docs/recipes/functional-apps/scst-function-bindings/
+
+
 ## Getting and building a sample application
 
     wget 'https://github.com/spring-cloud/spring-cloud-dataflow-samples/blob/main/dataflow-website/stream-developer-guides/streams/standalone-stream-sample/dist/usage-cost-stream-sample.zip?raw=true' -O usage-cost-stream-sample.zip
