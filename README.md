@@ -51,6 +51,11 @@ docker-compose -f docker-compose.yml -f docker-compose-kafka.yml -f docker-compo
 
 ## Spring starter application (included here)
 
+Build application:
+
+    in usage-cost-stream-sample:
+        ./mvnw clean package
+
 Registering an application:
 
     usage-detail-sender
