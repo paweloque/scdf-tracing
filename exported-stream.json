@@ -1,13 +1,12 @@
 {
-    "date": 1679585220841,
-    "streams": [
-      {
-        "name": "telco-stream",
-        "dslText": "usage-detail-sender --management.endpoints.web.exposure.include=health,info,bindings --management.metrics.tags.application.type=${spring.cloud.dataflow.stream.app.type:unknown} --management.metrics.tags.stream.name=${spring.cloud.dataflow.stream.name:unknown} --management.metrics.tags.application=${spring.cloud.dataflow.stream.name:unknown}-${spring.cloud.dataflow.stream.app.label:unknown}-${spring.cloud.dataflow.stream.app.type:unknown} --spring.cloud.stream.kafka.streams.binder.zknodes=zookeeper:2181 --management.metrics.tags.instance.index=${vcap.application.instance_index:${spring.cloud.stream.instanceIndex:0}} --spring.cloud.stream.kafka.streams.binder.brokers=PLAINTEXT://kafka-broker:9092 --wavefront.application.service=${spring.cloud.dataflow.stream.app.label:unknown}-${spring.cloud.dataflow.stream.app.type:unknown}-${vcap.application.instance_index:${spring.cloud.stream.instanceIndex:0}} --management.metrics.tags.application.guid=${spring.cloud.application.guid:unknown} --management.metrics.tags.application.name=${vcap.application.application_name:${spring.cloud.dataflow.stream.app.label:unknown}} --spring.cloud.stream.kafka.binder.zknodes=zookeeper:2181 --wavefront.application.name=${spring.cloud.dataflow.stream.name:unknown} --spring.kafka.streams.properties.metrics.recording.level=DEBUG --spring.cloud.stream.kafka.binder.brokers=PLAINTEXT://kafka-broker:9092 | usage-cost-processor --management.endpoints.web.exposure.include=health,info,bindings --management.metrics.tags.application.type=${spring.cloud.dataflow.stream.app.type:unknown} --management.metrics.tags.stream.name=${spring.cloud.dataflow.stream.name:unknown} --management.metrics.tags.application=${spring.cloud.dataflow.stream.name:unknown}-${spring.cloud.dataflow.stream.app.label:unknown}-${spring.cloud.dataflow.stream.app.type:unknown} --spring.cloud.stream.kafka.streams.binder.zknodes=zookeeper:2181 --management.metrics.tags.instance.index=${vcap.application.instance_index:${spring.cloud.stream.instanceIndex:0}} --spring.cloud.stream.kafka.streams.binder.brokers=PLAINTEXT://kafka-broker:9092 --wavefront.application.service=${spring.cloud.dataflow.stream.app.label:unknown}-${spring.cloud.dataflow.stream.app.type:unknown}-${vcap.application.instance_index:${spring.cloud.stream.instanceIndex:0}} --management.metrics.tags.application.guid=${spring.cloud.application.guid:unknown} --management.metrics.tags.application.name=${vcap.application.application_name:${spring.cloud.dataflow.stream.app.label:unknown}} --spring.cloud.stream.kafka.binder.zknodes=zookeeper:2181 --wavefront.application.name=${spring.cloud.dataflow.stream.name:unknown} --spring.kafka.streams.properties.metrics.recording.level=DEBUG --spring.cloud.stream.kafka.binder.brokers=PLAINTEXT://kafka-broker:9092 | usage-cost-logger --management.endpoints.web.exposure.include=health,info,bindings --management.metrics.tags.application.type=${spring.cloud.dataflow.stream.app.type:unknown} --management.metrics.tags.stream.name=${spring.cloud.dataflow.stream.name:unknown} --management.metrics.tags.application=${spring.cloud.dataflow.stream.name:unknown}-${spring.cloud.dataflow.stream.app.label:unknown}-${spring.cloud.dataflow.stream.app.type:unknown} --spring.cloud.stream.kafka.streams.binder.zknodes=zookeeper:2181 --management.metrics.tags.instance.index=${vcap.application.instance_index:${spring.cloud.stream.instanceIndex:0}} --spring.cloud.stream.kafka.streams.binder.brokers=PLAINTEXT://kafka-broker:9092 --wavefront.application.service=${spring.cloud.dataflow.stream.app.label:unknown}-${spring.cloud.dataflow.stream.app.type:unknown}-${vcap.application.instance_index:${spring.cloud.stream.instanceIndex:0}} --management.metrics.tags.application.guid=${spring.cloud.application.guid:unknown} --management.metrics.tags.application.name=${vcap.application.application_name:${spring.cloud.dataflow.stream.app.label:unknown}} --spring.cloud.stream.kafka.binder.zknodes=zookeeper:2181 --wavefront.application.name=${spring.cloud.dataflow.stream.name:unknown} --spring.kafka.streams.properties.metrics.recording.level=DEBUG --spring.cloud.stream.kafka.binder.brokers=PLAINTEXT://kafka-broker:9092",
-        "originalDslText": "usage-detail-sender | usage-cost-processor | usage-cost-logger",
-        "description": "",
-        "status": "DEPLOYED"
-      }
-    ]
-  }
-  
+  "date": 1679784229655,
+  "streams": [
+    {
+      "name": "telco-stream",
+      "dslText": "usage-detail-sender --spring.cloud.stream.poller.fixed-delay=2000 | usage-cost-processor | usage-cost-logger",
+      "originalDslText": "usage-detail-sender --spring.cloud.stream.poller.fixed-delay=2000 | usage-cost-processor | usage-cost-logger",
+      "description": "",
+      "status": "UNDEPLOYED"
+    }
+  ]
+}
