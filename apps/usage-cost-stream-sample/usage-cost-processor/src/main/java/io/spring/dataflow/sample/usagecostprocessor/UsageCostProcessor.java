@@ -3,6 +3,7 @@ package io.spring.dataflow.sample.usagecostprocessor;
 import java.util.Random;
 import java.util.function.Function;
 
+import org.springframework.cloud.sleuth.SpanName;
 import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
@@ -19,7 +20,7 @@ public class UsageCostProcessor {
 	private double ratePerMB = 0.05;
 
 	@Bean
-	@NewSpan(name = "UsageCostProcessor")
+//	@SpanName(value = "UsageCostProcessor")
 	public Function<UsageDetail, UsageCostDetail> processUsageCost() {
 		return usageDetail -> {
 			System.out.println("***** hello from ze streamzy ****+");

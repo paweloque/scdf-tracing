@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.sleuth.SpanName;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +31,7 @@ public class UsageDetailSender {
 			System.out.println(String.format("*** Our custom property: %s ***", karenzfrist));
 			UsageDetail usageDetail = new UsageDetail();
 			String user = this.users[new Random().nextInt(5)];
-//			tracer.createBaggage("user", user);
+			tracer.createBaggage("user", user);
 			usageDetail.setUserId(user);
 			usageDetail.setDuration(new Random().nextInt(300));
 			usageDetail.setData(new Random().nextInt(700));

@@ -71,11 +71,19 @@ Registering an application:
     file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-logger/target/usage-cost-logger-0.0.1-SNAPSHOT.jar
 
 
+Or alternatively in one go:
+```
+source.usage-detail-sender-rod=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-detail-sender/target/usage-detail-sender-0.0.1-SNAPSHOT.jar
+processor.usage-cost-processor-rod=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-processor/target/usage-cost-processor-0.0.1-SNAPSHOT.jar
+sink.usage-cost-logger-rod=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-logger/target/usage-cost-logger-0.0.1-SNAPSHOT.jar
+```
+
     Stream definition:
         usage-detail-sender | usage-cost-processor | usage-cost-logger
     
     Stream definition with a polling delay of 2000ms:
         usage-detail-sender --spring.cloud.stream.poller.fixed-delay=2000 | usage-cost-processor | usage-cost-logger
+        usage-detail-sender-rod --spring.cloud.stream.poller.fixed-delay=2000 | usage-cost-processor-rod | usage-cost-logger-rod
 
     Exposed via http:
         Processor:
