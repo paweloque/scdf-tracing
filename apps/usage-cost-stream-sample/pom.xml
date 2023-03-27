@@ -16,6 +16,7 @@
     <modules>
         <module>usage-cost-logger</module>
         <module>usage-cost-processor</module>
+        <module>usage-cost-calculator</module>
         <module>usage-detail-sender</module>
     </modules>
     <properties>

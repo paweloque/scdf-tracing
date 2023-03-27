@@ -73,17 +73,17 @@ Registering an application:
 
 Or alternatively in one go:
 ```
-source.usage-detail-sender-rod=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-detail-sender/target/usage-detail-sender-0.0.1-SNAPSHOT.jar
-processor.usage-cost-processor-rod=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-processor/target/usage-cost-processor-0.0.1-SNAPSHOT.jar
-sink.usage-cost-logger-rod=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-logger/target/usage-cost-logger-0.0.1-SNAPSHOT.jar
+source.usage-detail-sender=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-detail-sender/target/usage-detail-sender-0.0.1-SNAPSHOT.jar
+processor.usage-cost-processor=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-processor/target/usage-cost-processor-0.0.1-SNAPSHOT.jar
+processor.usage-cost-calculator=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-processor/target/usage-cost-processor-0.0.1-SNAPSHOT.jar
+sink.usage-cost-logger=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-logger/target/usage-cost-logger-0.0.1-SNAPSHOT.jar
 ```
 
     Stream definition:
         usage-detail-sender | usage-cost-processor | usage-cost-logger
     
     Stream definition with a polling delay of 2000ms:
-        usage-detail-sender --spring.cloud.stream.poller.fixed-delay=2000 | usage-cost-processor | usage-cost-logger
-        usage-detail-sender-rod --spring.cloud.stream.poller.fixed-delay=2000 | usage-cost-processor-rod | usage-cost-logger-rod
+        usage-detail-sender --spring.cloud.stream.poller.fixed-delay=2000 | usage-cost-processor | usage-cost-calculator | usage-cost-logger
 
     Exposed via http:
         Processor:

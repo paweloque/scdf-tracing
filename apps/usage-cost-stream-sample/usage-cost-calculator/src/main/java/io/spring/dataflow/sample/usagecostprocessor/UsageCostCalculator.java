@@ -5,18 +5,12 @@ import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.sleuth.Span;
-import org.springframework.cloud.sleuth.SpanName;
 import org.springframework.cloud.sleuth.Tracer;
-import org.springframework.cloud.sleuth.annotation.NewSpan;
-import org.springframework.cloud.stream.annotation.Input;
-import org.springframework.cloud.stream.annotation.Output;
-import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import reactor.core.publisher.Flux;
 
 @Configuration
-public class UsageCostProcessor {
+public class UsageCostCalculator {
 
 	@Autowired
 	private Tracer tracer;
@@ -27,20 +21,26 @@ public class UsageCostProcessor {
 
 	@Bean
 //	@SpanName(value = "UsageCostProcessor")
-	public Function<UsageDetail, UsageCostDetail> processUsageCost() {
+	public Function<UsageCostDetail, UsageCostDetail> processUsageCost() {
 		return usageDetail -> {
-			Span newSpan = tracer.nextSpan().name("UsageCostProcessor");
+			Span newSpan = this.tracer.nextSpan().name("UsageCostCalculator");
+
 			try (Tracer.SpanInScope ws = this.tracer.withSpan(newSpan.start())) {
-				System.out.println("***** hello from ze streamzy ****+");
+
+				System.out.println("***** hello from ze calculator ****+");
 				try {
 					Thread.sleep(new Random().nextInt(500));
 				} catch (InterruptedException e) {
 				}
 				UsageCostDetail usageCostDetail = new UsageCostDetail();
 				usageCostDetail.setUserId(usageDetail.getUserId());
-				usageCostDetail.setCallCost(usageDetail.getDuration() * this.ratePerSecond);
-				usageCostDetail.setDataCost(usageDetail.getData() * this.ratePerMB);
-				newSpan.event("usageCostCalculated");
+				usageCostDetail.setCallCost(usageDetail.getCallCost() * this.ratePerSecond);
+				usageCostDetail.setDataCost(usageDetail.getDataCost() * this.ratePerMB);
+
+				newSpan.tag("UserId", usageCostDetail.getUserId());
+				newSpan.tag("CallCost", ""+usageCostDetail.getCallCost());
+				newSpan.tag("DataCost", ""+usageCostDetail.getDataCost());
+				newSpan.event("CostReCalculated");
 
 				return usageCostDetail;
 			}
@@ -49,8 +49,6 @@ public class UsageCostProcessor {
 				// the span to send it to a distributed tracing system e.g. Zipkin
 				newSpan.end();
 			}
-
-
 		};
 	}
 }
