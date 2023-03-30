@@ -26,21 +26,39 @@ public class UsageCostProcessor {
 	private double ratePerMB = 0.05;
 
 	@Bean
-//	@SpanName(value = "UsageCostProcessor")
+	@SpanName(value = "UsageCostProcessor.processUsageCost()")
 	public Function<UsageDetail, UsageCostDetail> processUsageCost() {
 		return usageDetail -> {
-			Span newSpan = tracer.nextSpan().name("UsageCostProcessor");
+			Span newSpan = tracer.nextSpan().name("UsageCostProcessor-explicit");
 			try (Tracer.SpanInScope ws = this.tracer.withSpan(newSpan.start())) {
 				System.out.println("***** hello from ze streamzy ****+");
-				try {
-					Thread.sleep(new Random().nextInt(500));
-				} catch (InterruptedException e) {
-				}
+//				try {
+//					Thread.sleep(new Random().nextInt(500));
+//				} catch (InterruptedException e) {
+//				}
 				UsageCostDetail usageCostDetail = new UsageCostDetail();
 				usageCostDetail.setUserId(usageDetail.getUserId());
 				usageCostDetail.setCallCost(usageDetail.getDuration() * this.ratePerSecond);
 				usageCostDetail.setDataCost(usageDetail.getData() * this.ratePerMB);
-				newSpan.event("usageCostCalculated");
+
+				newSpan.tag("UserId", usageCostDetail.getUserId());
+				newSpan.tag("CallCost", ""+usageCostDetail.getCallCost());
+				newSpan.tag("DataCost", ""+usageCostDetail.getDataCost());
+				newSpan.event("Processor-CostReCalculated");
+
+				Span newSpan2 = tracer.nextSpan().name("UsageCostProcessor-explicit-inner");
+				try (Tracer.SpanInScope ws2 = this.tracer.withSpan(newSpan2.start())) {
+					System.out.println("souting");
+					System.out.println("souting");
+					System.out.println("souting");
+					System.out.println("souting");
+				}
+				finally {
+					// Once done remember to end the span. This will allow collecting
+					// the span to send it to a distributed tracing system e.g. Zipkin
+					newSpan.end();
+				}
+
 
 				return usageCostDetail;
 			}

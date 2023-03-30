@@ -78,14 +78,43 @@ processor.usage-cost-processor=file://home/cnb/scdf/apps/usage-cost-stream-sampl
 processor.usage-cost-calculator=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-processor/target/usage-cost-processor-0.0.1-SNAPSHOT.jar
 sink.usage-cost-logger=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-logger/target/usage-cost-logger-0.0.1-SNAPSHOT.jar
 ```
+```
+source.usage-detail-sender-qc=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-detail-sender/target/usage-detail-sender-0.0.1-SNAPSHOT.jar
+processor.usage-cost-processor-qc=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-processor/target/usage-cost-processor-0.0.1-SNAPSHOT.jar
+processor.usage-cost-calculator-qc=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-processor/target/usage-cost-processor-0.0.1-SNAPSHOT.jar
+sink.usage-cost-logger-qc=file://home/cnb/scdf/apps/usage-cost-stream-sample/usage-cost-logger/target/usage-cost-logger-0.0.1-SNAPSHOT.jar
+```
 
     Stream definition:
         usage-detail-sender | usage-cost-processor | usage-cost-logger
     
     Stream definition with a polling delay of 2000ms:
-        usage-detail-sender --spring.cloud.stream.poller.fixed-delay=2000 | usage-cost-processor | usage-cost-calculator | usage-cost-logger
+        usage-detail-sender | usage-cost-processor | usage-cost-calculator | usage-cost-logger
+        usage-detail-sender --spring.cloud.stream.poller.fixed-delay=4000 | usage-cost-processor | usage-cost-calculator | usage-cost-logger
+        usage-detail-sender-qc --spring.cloud.stream.poller.fixed-delay=4000 | usage-cost-processor-qc | usage-cost-calculator-qc | usage-cost-logger-qc
+        usage-detail-sender --spring.cloud.stream.poller.fixed-delay=2000 | usage-cost-processor | usage-cost-calculator | lbl:usage-cost-calculator | usage-cost-logger
 
     Exposed via http:
         Processor:
             http://localhost:20078/api/v1/configs
     
+
+
+
+
+Wichtigsten Systeme "nehmen" und Katalogisieren Step-by-step
+    soap ev. nur als auflistung
+    swagger und übersicht für die wichtigsten Systeme
+    wir fangen damit 
+        zeigen es
+
+
+Viel Domain-Code ist dupliziert
+    identifizieren und definieren was ein eigener Service
+    auflisten / dokumentieren
+    beim nächsten mal wird es nicht mehr selber geschrieben, sonder überlegt wie wiederverwenden
+
+
+    
+
+

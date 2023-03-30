@@ -26,40 +26,41 @@ public class UsageDetailSender {
 
 	private String[] users = {"user1", "user2", "user3", "user4", "user5"};
 
-	//	@NewSpan(name = "UsageDetailSender")
-	//	private UsageDetail sendUsageDetails() {
-	//		System.out.println(String.format("*** Our custom property: %s ***", karenzfrist));
-	//		UsageDetail usageDetail = new UsageDetail();
-	//		String user = this.users[new Random().nextInt(5)];
-	//		tracer.createBaggage("user", user);
-	//		usageDetail.setUserId(user);
-	//		usageDetail.setDuration(new Random().nextInt(300));
-	//		usageDetail.setData(new Random().nextInt(700));
-	//		try {
-	//			Thread.sleep(new Random().nextInt(300));
-	//		} catch (InterruptedException e) {
-	//		}
-	//		return usageDetail;
-	//	}
+	@NewSpan(name = "UsageDetailSender-Annotation")
+	private UsageDetail sendUsageDetails() {
+		System.out.println(String.format("*** Our custom property: %s ***", karenzfrist));
+		UsageDetail usageDetail = new UsageDetail();
+		String user = this.users[new Random().nextInt(5)];
+		tracer.createBaggage("user", user);
+		usageDetail.setUserId(user);
+		usageDetail.setDuration(new Random().nextInt(300));
+		usageDetail.setData(new Random().nextInt(700));
+		try {
+			Thread.sleep(new Random().nextInt(300));
+		} catch (InterruptedException e) {
+		}
+		return usageDetail;
+	}
 
 	@Bean
 //	@NewSpan(name = "UsageDetailSender")
 	public Supplier<UsageDetail> sendEvents() {
-		return () -> {
-			Span newSpan = tracer.nextSpan().name("UsageDetailSender");
-			System.out.println(String.format("*** Our custom property: %s ***", karenzfrist));
-			UsageDetail usageDetail = new UsageDetail();
-			String user = this.users[new Random().nextInt(5)];
-			newSpan.tag("user", user);
+		return this::sendUsageDetails;
+//		return () -> {
+//			Span newSpan = tracer.nextSpan().name("UsageDetailSender");
+//			System.out.println(String.format("*** Our custom property: %s ***", karenzfrist));
+//			UsageDetail usageDetail = new UsageDetail();
+//			String user = this.users[new Random().nextInt(5)];
+//			newSpan.tag("user", user);
 //			tracer.createBaggage("user", user);
-			usageDetail.setUserId(user);
-			usageDetail.setDuration(new Random().nextInt(300));
-			usageDetail.setData(new Random().nextInt(700));
-			try {
-				Thread.sleep(new Random().nextInt(300));
-			} catch (InterruptedException e) {
-			}
-			return usageDetail;
-		};
+//			usageDetail.setUserId(user);
+//			usageDetail.setDuration(new Random().nextInt(300));
+//			usageDetail.setData(new Random().nextInt(700));
+//			try {
+//				Thread.sleep(new Random().nextInt(300));
+//			} catch (InterruptedException e) {
+//			}
+//			return usageDetail;
+//		};
 	}
 }
