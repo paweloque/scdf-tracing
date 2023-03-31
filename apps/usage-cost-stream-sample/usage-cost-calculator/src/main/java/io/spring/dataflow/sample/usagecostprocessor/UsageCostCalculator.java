@@ -44,9 +44,7 @@ public class UsageCostCalculator {
 			// the span to send it to a distributed tracing system e.g. Zipkin
 			newSpan.end();
 		}
-
-		}
-
+	}
 	@Bean
 //	@SpanName(value = "UsageCostProcessor")
 	public Function<UsageCostDetail, UsageCostDetail> processUsageCost() {

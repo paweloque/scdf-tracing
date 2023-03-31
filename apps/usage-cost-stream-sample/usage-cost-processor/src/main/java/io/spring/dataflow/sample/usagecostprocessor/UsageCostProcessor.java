@@ -6,6 +6,7 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.sleuth.Span;
 import org.springframework.cloud.sleuth.SpanName;
+import org.springframework.cloud.sleuth.TraceContext;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.cloud.stream.annotation.Input;
@@ -28,6 +29,15 @@ public class UsageCostProcessor {
 	@Bean
 	@SpanName(value = "UsageCostProcessor.processUsageCost()")
 	public Function<UsageDetail, UsageCostDetail> processUsageCost() {
+		Span span = this.tracer.currentSpan();
+		System.out.println("****### span ###****");
+		System.out.println(span);
+
+		Span longSpan = tracer.nextSpan().name("UsageCostProcessor-long");
+		TraceContext context = longSpan.context();
+		context.spanId();
+
+
 		return usageDetail -> {
 			Span newSpan = tracer.nextSpan().name("UsageCostProcessor-explicit");
 			try (Tracer.SpanInScope ws = this.tracer.withSpan(newSpan.start())) {
